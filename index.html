@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atlas FC – Team Lineup Manager est une application web responsive permettant de gérer l'effectif d'une équipe de football, créer une composition en 4-4-2, assigner les joueurs à leurs postes et sauvegarder les données grâce à localStorage. Développée avec HTML, Tailwind CSS et JavaScript.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tachkila-Composition-d-quipe</title>
+</head>
+<body class="grid grid-cols-3 bg-[#071319] text-white">
+    <header class="col-span-full  border-[#6e879a] border-b-2 p-3 flex items-center gap-10">
+        <div class="flex flex-1 items-center gap-5 border-green-200 border-r-3 rounded-lg ">
+            <img src="/Image/logo.png.png" alt="logo" loading="lazy" class="w-20">
+            <div>
+                <h1 class="text-3xl font-bold">ATLAS FC</h1>
+                <p class="text-[#6e879a] tracking-[.25em]">Team Lineup Manager</p>
+            </div>
+        </div>
+
+        <div class="flex-1 border-r-1  py-2 flex gap-3 items-center justify-center">
+            <p class="text-[#6e879a] text-xl font-normal">Schema</p>
+            <p class="border-green-200 text-xl font-bold shadow-green-200 shadow-sm px-8 py-2 rounded-lg">4-4-2</p>
+        </div>
+
+        <div class="flex flex-1 gap-5 font-bold border-r-1 justify-center  py-4">
+            <p class="flex gap-2"><span class="px-[12px] bg-[#f3de24] rounded-[50%]"></span>GB</p>
+            <p class="flex gap-2"><span class="px-[12px] bg-[#368af8] rounded-[50%]"></span>DEF</p>
+            <p class="flex gap-2"><span class="px-[12px] bg-[#079642] rounded-[50%]"></span>MIL</p>
+            <p class="flex gap-2"><span class="px-[12px] bg-[#fc333b] rounded-[50%]"></span>AIT</p>
+        </div>
+
+        <form class="flex flex-1 gap-4 items-center font-bold justify-center  border-r-1 pr-7">
+            <div class="flex  items-center gap-4">
+                <input type="radio" id="dark" name="light-dark" value="dark" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-white-400 transition-all  checked:shadow-white checked:shadow-md">
+                <label for="dark">Dark Mood</label>
+            </div>
+
+            <div class="flex  items-center gap-4">
+                <input type="radio" id="light" name="light-dark" value="light" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all checked:shadow-white checked:shadow-md">
+                <label for="light">Light Mood</label>
+            </div>
+        </form>
+
+        <div class="flex flex-1 gap-5 justify-center items-center">
+            <i class="fa-solid fa-users text-5xl text-green-500 pop"></i>
+            <div>
+                <p class="text-gray-400 font-normale">Total joueurs places:</p>
+                <p class="text-2xl font-bold">18</p>
+            </div>
+        </div>
+    </header>
+
+    <aside class="h-[88vh] w-5/6 border-[#6e879a] border-r-2">aside</aside>
+
+    <main class="col-span-2">content</main>
+</body>
+</html>
