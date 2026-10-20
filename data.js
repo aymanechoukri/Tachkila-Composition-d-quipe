@@ -1,15 +1,8 @@
-export const players = [
-    {
-        id: 1,
-        name: "Bono",
-        position: "Gardien",
-        num: 1,
-    },
+export const players = [];
 
-    {
-        id: 2,
-        name: "aymane",
-        position: "Gardien",
-        num: 4,
-    }
-]
+export const COLOR_MAP = {
+    "Buteur" : "border-red-600",
+    "Gardien" : "border-orange-500",
+    "Milieu" : "border-green-500",
+    "Defenseur" : "border-blue-500",
+}
