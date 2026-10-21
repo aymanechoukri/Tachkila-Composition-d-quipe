@@ -12,12 +12,22 @@ const number = document.querySelector("#number");
 const checkedName = document.querySelector(".checked-name");
 const checkedPosition = document.querySelector(".checked-position");
 const checkedNumber = document.querySelector(".checked-number");
+let countJoueur = document.querySelector(".count-joueur");
 
 let namePlayer = "";
 let numberPlayer = "";
 let positionValue = "";
 
-const players_pl = JSON.parse(localStorage.getItem("players")) || []
+const players_pl = JSON.parse(localStorage.getItem("players")) || [];
+let cou = JSON.parse(localStorage.getItem("numberPlayer")) || 0;
+
+function setNumber() {
+    cou = players_pl.length;
+
+    localStorage.setItem("numberPlayer", JSON.stringify(cou));
+    countJoueur.textContent = cou;
+}
+
 
 function addPlayer(player) {
     return players_pl.push(player);
@@ -34,6 +44,8 @@ positions.forEach(position => {
 name.addEventListener("input", (e) => {
     namePlayer = e.target.value;
     checkedName.textContent = "";
+
+    console.log(namePlayer)
 });
 
 number.addEventListener("input", (e) => {
@@ -74,13 +86,13 @@ ajouter.addEventListener("click", () => {
         position: positionValue,
         number: numberPlayer
     }
-    console.log("this players ",  addPlayer(player));
+    
+    addPlayer(player)
     localStorage.setItem("players", JSON.stringify(players_pl));
-
     renderPlayers();
+    setNumber()
     popap.hidden = true;
 })
-
 
 
 function getColor(player) {
@@ -137,6 +149,7 @@ function renderPlayers() {
 
 
 renderPlayers();
+setNumber();
 openOrClosePopap.forEach(btn => {
     btn.addEventListener("click", () => {
         popap.hidden = !popap.hidden;
