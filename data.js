@@ -1,4 +1,9 @@
-export const players = [];
+export const players = [
+    {
+        id: 1,
+        name: "aumahiuge",
+    }
+];
 
 export const COLOR_MAP = {
     "Buteur" : "border-red-600",

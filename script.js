@@ -1,12 +1,16 @@
 import { COLOR_MAP } from "./data.js";
 
+const arr = [];
+
 const tickts = document.querySelector("#tickts");
 const popap = document.getElementById("popap");
+const popapUpdate = document.getElementById("popap-update");
 const openOrClosePopap = document.querySelectorAll(".open-or-popap");
+const openOrClose = document.querySelectorAll(".open-or-clos");
 
 const ajouter = document.querySelector("#ajouter");
 const name = document.querySelector("#name");
-const positions = document.querySelectorAll("#position");
+const positions = document.querySelectorAll(".position");
 const number = document.querySelector("#number");
 
 const checkedName = document.querySelector(".checked-name");
@@ -14,9 +18,14 @@ const checkedPosition = document.querySelector(".checked-position");
 const checkedNumber = document.querySelector(".checked-number");
 let countJoueur = document.querySelector(".count-joueur");
 
+const updatName = document.querySelector("#updateName");
+const updatePosition = document.querySelectorAll(".updatePosition");
+const updateNumber = document.querySelector("#updateNumber");
+
 let namePlayer = "";
 let numberPlayer = "";
 let positionValue = "";
+
 
 const players_pl = JSON.parse(localStorage.getItem("players")) || [];
 let cou = JSON.parse(localStorage.getItem("numberPlayer")) || 0;
@@ -33,11 +42,14 @@ function addPlayer(player) {
     return players_pl.push(player);
 }
 
+
 positions.forEach(position => {
     position.addEventListener("click", () => {
         positionValue = position.dataset.position;
-
-        console.log(positionValue)
+        positions.forEach(btn => {
+            btn.classList.remove("background-active");
+        });
+        position.classList.add("background-active");
     })
 })
 
@@ -94,9 +106,73 @@ ajouter.addEventListener("click", () => {
     popap.hidden = true;
 })
 
+updatName.addEventListener("input", (e) => {
+    namePlayer = e.target.value;
+    checkedName.textContent = "";
+
+    console.log(namePlayer)
+});
+
 
 function getColor(player) {
     return COLOR_MAP[player.position]    
+}
+
+function deletedPlayer(id) {
+    const players_pl = JSON.parse(localStorage.getItem("players"));
+
+    const filterPlayer = players_pl.filter(u => u.id !== id);
+    localStorage.setItem("players", JSON.stringify(filterPlayer));
+
+    renderPlayers()
+    setNumber()
+    location.reload();
+}
+
+    tickts.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-delete]");
+    if (!btn) return;
+
+    const id = Number(btn.dataset.delete);
+    deletedPlayer(id);
+
+   console.log(updatePlayer(id2));
+});
+
+ tickts.addEventListener("click", (e) => {
+    const btn2 = e.target.closest('[data-edit]');
+
+    if (!btn2) return;
+
+    const id2 = Number(btn2.dataset.edit);
+
+   console.log("aymane", getPlayer(id2));
+   popapUpdate.hidden = !popapUpdate.hidden;
+});
+
+
+
+function getPlayer(id) {
+    const players_pl = JSON.parse(localStorage.getItem("players"));
+
+    const update = players_pl.find(u => u.id === id);
+
+    updatName.value = update.name;
+    updatePosition.value = update.position;
+    updateNumber.value = update.number;
+
+    updatePosition.forEach(position => {
+        position.classList.remove("background-active");
+    })
+
+    updatePosition.forEach(position => {
+        if (position.dataset.position === update.position) {
+            position.classList.add("background-active")
+        }
+    });
+
+    
+    return update;
 }
 
 
@@ -150,9 +226,15 @@ function renderPlayers() {
 
 renderPlayers();
 setNumber();
+
 openOrClosePopap.forEach(btn => {
     btn.addEventListener("click", () => {
         popap.hidden = !popap.hidden;
     })
 })
 
+openOrClose.forEach(btn => {
+    btn.addEventListener("click", () => {
+        popapUpdate.hidden = !popapUpdate.hidden;
+    })
+})

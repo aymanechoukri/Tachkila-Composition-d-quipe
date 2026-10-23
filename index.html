@@ -52,6 +52,7 @@
         </div>
     </header>
 
+    <!--Ajouter joueur-->
     <div id="popap" class="absolute w-full h-screen  backdrop-blur-sm grid justify-items-center content-center "hidden>
         <div class="w-[40%] bg-slate-800 h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
             <div class="flex justify-between items-center">
@@ -62,27 +63,64 @@
             <form class="flex flex-col gap-5">
                 <div class="flex-1 flex flex-col gap-5" >
                     <label for="name" class="font-bold text-2xl">Name Player :</label>
-                    <input id="name" type="text" name="name" placeholder="EXMPLE ROUNALDO CR7..." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
+                    <input id="name" type="text" value="" name="name" placeholder="EXMPLE ROUNALDO CR7..." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
                     <p class="checked-name text-lg text-red-600 ml-2"></p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-5 justify-items-center ">
-                    <button type="button" data-position="Gardien"  id="position" class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 focus:bg-orange-300"><span class="px-[15px] bg-[#f3de24] rounded-[50%]"></span>Gardien</button>
-                    <button type="button" data-position="Defenseur"  id="position" class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 focus:bg-orange-300"><span class="px-[15px] bg-[#368af8] rounded-[50%]"></span>Defenseur</button>
-                    <button type="button" data-position="Milieu"  id="position" class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 focus:bg-orange-300"><span class="px-[15px] bg-[#079642] rounded-[50%]"></span>Milieu</button>
-                    <button type="button" data-position="Buteur"  id="position" class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 focus:bg-orange-300"><span class="px-[15px] bg-[#fc333b] rounded-[50%]"></span>Buteur</button>
+                    <button value="" type="button" data-position="Gardien"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5  position"><span class="px-[15px] bg-[#f3de24] rounded-[50%]"></span>Gardien</button>
+                    <button value="" type="button" data-position="Defenseur"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 position"><span class="px-[15px] bg-[#368af8] rounded-[50%]"></span>Defenseur</button>
+                    <button value="" type="button" data-position="Milieu"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5  position"><span class="px-[15px] bg-[#079642] rounded-[50%]"></span>Milieu</button>
+                    <button value="" type="button" data-position="Buteur"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 position"><span class="px-[15px] bg-[#fc333b] rounded-[50%]"></span>Buteur</button>
                 </div>
                 <p class="checked-position text-lg text-red-600 ml-2"></p>
 
                 <div class="flex-1 flex flex-col gap-5" >
                     <label for="number" class="font-bold text-2xl">Number Player :</label>
-                    <input id="number" min="1" type="number" name="name" placeholder="10...." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
+                    <input value="" id="number" min="1" type="number" name="name" placeholder="10...." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
                     <p class="checked-number text-lg text-red-600 ml-2"></p>
                 </div>
 
                 <div class="flex gap-5 items-center justify-end">
                     <button type="button" id="ajouter" type="submit" class="font-bold w-[30%] py-4 text-lg hover:scale-101 active:scale-100 bg-green-700 rounded-4xl cursor-pointer shadow-lg">Ajouter</button>
                     <button type="button" class="font-bold w-[30%] py-4 text-lg hover:scale-101 active:scale-100 bg-red-600 rounded-4xl cursor-pointer shadow-lg open-or-popap">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--updated joueur-->
+    <div id="popap-update" class="absolute w-full h-screen  backdrop-blur-sm grid justify-items-center content-center " hidden>
+        <div class="w-[40%] bg-slate-800 h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
+            <div class="flex justify-between items-center">
+                <h2 class="font-bold text-2xl">Modifier un joueur</h2>
+                <button class="open-or-clos"><i class="fa-solid fa-xmark px-3 py-2 bg-red-600 hover:scale-105 shadow-lg shadow-red-600 cursor-pointer rounded-full"></i></button>
+            </div>
+
+            <form class="flex flex-col gap-5">
+                <div class="flex-1 flex flex-col gap-5" >
+                    <label for="name" class="font-bold text-2xl">Name Player :</label>
+                    <input id="updateName" type="text" name="name" placeholder="EXMPLE ROUNALDO CR7..." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
+                    <p class="checked-name text-lg text-red-600 ml-2"></p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-5 justify-items-center ">
+                    <button type="button" data-position="Gardien"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 checked:border-indigo-500 updatePosition "><span class="px-[15px] bg-[#f3de24] rounded-[50%]"></span>Gardien</button>
+                    <button type="button" data-position="Defenseur"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 checked:border-indigo-500 updatePosition"><span class="px-[15px] bg-[#368af8] rounded-[50%]"></span>Defenseur</button>
+                    <button type="button" data-position="Milieu"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 checked:border-indigo-500 updatePosition"><span class="px-[15px] bg-[#079642] rounded-[50%]"></span>Milieu</button>
+                    <button type="button" data-position="Buteur"   class="bg-slate-950 py-5 shadow-lg font-bold text-lg hover:scale-101 cursor-pointer duration-500 w-[100%] rounded-4xl flex gap-4 pl-5 checked:border-indigo-500 updatePosition"><span class="px-[15px] bg-[#fc333b] rounded-[50%]"></span>Buteur</button>
+                </div>
+                <p class="checked-position text-lg text-red-600 ml-2"></p>
+
+                <div class="flex-1 flex flex-col gap-5" >
+                    <label for="number" class="font-bold text-2xl">Number Player :</label>
+                    <input id="updateNumber" min="1" type="number" name="name" placeholder="10...." class="outline-none border-2 border-slate-400 px-4 font-normal text-xl h-15 rounded-xl focus:shadow-sm shadow-white duration-700" required>
+                    <p class="checked-number text-lg text-red-600 ml-2"></p>
+                </div>
+
+                <div class="flex gap-5 items-center justify-end">
+                    <button type="button" id="modifier" type="submit" class="font-bold w-[30%] py-4 text-lg hover:scale-101 active:scale-100 bg-green-700 rounded-4xl cursor-pointer shadow-lg">Modifier</button>
+                    <button type="button" class="font-bold w-[30%] py-4 text-lg hover:scale-101 active:scale-100 bg-red-600 rounded-4xl cursor-pointer shadow-lg open-or-clos">Annuler</button>
                 </div>
             </form>
         </div>
