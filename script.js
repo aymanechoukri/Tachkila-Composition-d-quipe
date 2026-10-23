@@ -1,7 +1,5 @@
 import { COLOR_MAP } from "./data.js";
 
-const arr = [];
-
 const tickts = document.querySelector("#tickts");
 const popap = document.getElementById("popap");
 const popapUpdate = document.getElementById("popap-update");
@@ -21,10 +19,16 @@ let countJoueur = document.querySelector(".count-joueur");
 const updatName = document.querySelector("#updateName");
 const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
+const modifier = document.querySelector("#modifier");
+const article = document.querySelector(".article");
 
 let namePlayer = "";
 let numberPlayer = "";
 let positionValue = "";
+
+let updateNameValue = "";
+let updateNumberValue = "";
+let updatePositionValue = "";
 
 
 const players_pl = JSON.parse(localStorage.getItem("players")) || [];
@@ -51,14 +55,16 @@ positions.forEach(position => {
         });
         position.classList.add("background-active");
     })
+    
 })
 
-name.addEventListener("input", (e) => {
+name.addEventListener("change", (e) => {
     namePlayer = e.target.value;
     checkedName.textContent = "";
 
     console.log(namePlayer)
 });
+
 
 number.addEventListener("input", (e) => {
     numberPlayer = e.target.value;
@@ -93,13 +99,13 @@ ajouter.addEventListener("click", () => {
     console.log(positionValue)
     
     const player = {
-        id: Date.now(),
+        id: Date.nplayerow(),
         name: namePlayer,
         position: positionValue,
         number: numberPlayer
     }
     
-    addPlayer(player)
+    addPlayer()
     localStorage.setItem("players", JSON.stringify(players_pl));
     renderPlayers();
     setNumber()
@@ -155,7 +161,7 @@ function deletedPlayer(id) {
 function getPlayer(id) {
     const players_pl = JSON.parse(localStorage.getItem("players"));
 
-    const update = players_pl.find(u => u.id === id);
+    let update = players_pl.find(u => u.id === id);
 
     updatName.value = update.name;
     updatePosition.value = update.position;
@@ -171,10 +177,69 @@ function getPlayer(id) {
         }
     });
 
-    
+    update = {
+        name: updateNameValue,
+        position: updatePositionValue,
+        number: updateNumberValue
+    }
     return update;
 }
 
+updatName.addEventListener("change", (e) => {
+    updateNameValue = e.target.value;
+    checkedName.textContent = "";
+
+    console.log(updateNameValue)
+})
+
+updatePosition.forEach(position => {
+    position.addEventListener('click', () => {
+        updatePositionValue = position.dataset.position;
+
+        updatePosition.forEach(position => {
+            position.classList.remove("background-active");
+        });
+
+        position.classList.add("background-active");
+    });
+})
+
+updateNumber.addEventListener("input", (e) => {
+    updateNumberValue = e.target.value;
+    console.log(updateNumberValue);
+});
+
+
+modifier.addEventListener("click", () => {
+    let validation = true;
+    if (!namePlayer.trim()) {
+        checkedName.textContent = "veuillez saisir votre nom";
+        validation = false;
+    }
+
+    if (!positionValue) {
+        checkedPosition.textContent = "Définir le poste du joueur";
+        validation = false;
+    }
+
+    if (
+    numberPlayer.trim() === "" ||
+    Number(numberPlayer) < 1 ||
+    Number(numberPlayer) > 99 ||
+    !Number.isInteger(Number(numberPlayer))
+) {
+    checkedNumber.textContent = "Entrez un numéro entre 1 et 99";
+    validation = false;
+}
+
+    if (!validation) {
+        return;
+    }
+
+    const players_pl = JSON.parse(localStorage.getItem("players"));
+    console.log("aymane")
+    
+})
 
 let html = "";
 
@@ -186,7 +251,7 @@ function renderPlayers() {
         const color = getColor(player);
 
         const html = `
-            <article class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color}">
+            <article value=${player.id} class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color} article">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <p class="border-1 ${color} px-4 py-2 rounded-full">
