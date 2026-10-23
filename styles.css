@@ -111,3 +111,7 @@
 .background-active {
     background-color: rgb(103, 66, 39);
 }
+
+.hide {
+    display: none;
+}

@@ -20,7 +20,6 @@ const updatName = document.querySelector("#updateName");
 const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
 const modifier = document.querySelector("#modifier");
-const article = document.querySelector(".article");
 
 let namePlayer = "";
 let numberPlayer = "";
@@ -29,6 +28,8 @@ let positionValue = "";
 let updateNameValue = "";
 let updateNumberValue = "";
 let updatePositionValue = "";
+
+let playerId = null;
 
 
 const players_pl = JSON.parse(localStorage.getItem("players")) || [];
@@ -58,7 +59,7 @@ positions.forEach(position => {
     
 })
 
-name.addEventListener("change", (e) => {
+name.addEventListener("input", (e) => {
     namePlayer = e.target.value;
     checkedName.textContent = "";
 
@@ -99,14 +100,38 @@ ajouter.addEventListener("click", () => {
     console.log(positionValue)
     
     const player = {
-        id: Date.nplayerow(),
+        id: Date.now(),
         name: namePlayer,
         position: positionValue,
-        number: numberPlayer
+        number: numberPlayer,
+        selection: [
+    { value: "GB", label: "GB - Gardien" },
+    { value: "DG", label: "DG - Défenseur gauche" },
+    { value: "DC1", label: "DC - Défenseur central 1" },
+    { value: "DC2", label: "DC - Défenseur central 2" },
+    { value: "DD", label: "DD - Défenseur droit" },
+    { value: "MG", label: "MG - Milieu gauche" },
+    { value: "MC1", label: "MC - Milieu central 1" },
+    { value: "MC2", label: "MC - Milieu central 2" },
+    { value: "MD", label: "MD - Milieu droit" },
+    { value: "BU1", label: "BU - Buteur 1" },
+    { value: "BU2", label: "BU - Buteur 2" },
+    { value: "BENCH", label: "Sur le banc" }
+    ]
     }
     
-    addPlayer()
+    addPlayer(player)
     localStorage.setItem("players", JSON.stringify(players_pl));
+    name.value = "";
+    number.value = "";
+
+    positions.forEach(position => {
+        position.classList.remove("background-active");
+    });
+
+    checkedName.textContent = "";
+    checkedPosition.textContent = "";
+    checkedNumber.textContent = "";
     renderPlayers();
     setNumber()
     popap.hidden = true;
@@ -125,7 +150,7 @@ function getColor(player) {
 }
 
 function deletedPlayer(id) {
-    const players_pl = JSON.parse(localStorage.getItem("players"));
+    const players_pl = JSON.parse(localStorage.getItem("players")) || [];
 
     const filterPlayer = players_pl.filter(u => u.id !== id);
     localStorage.setItem("players", JSON.stringify(filterPlayer));
@@ -141,8 +166,6 @@ function deletedPlayer(id) {
 
     const id = Number(btn.dataset.delete);
     deletedPlayer(id);
-
-   console.log(updatePlayer(id2));
 });
 
  tickts.addEventListener("click", (e) => {
@@ -152,20 +175,26 @@ function deletedPlayer(id) {
 
     const id2 = Number(btn2.dataset.edit);
 
-   console.log("aymane", getPlayer(id2));
+    playerId = id2;
+
+   getPlayer(id2);
    popapUpdate.hidden = !popapUpdate.hidden;
 });
 
 
 
 function getPlayer(id) {
-    const players_pl = JSON.parse(localStorage.getItem("players"));
+    const players_pl = JSON.parse(localStorage.getItem("players")) || [];
 
     let update = players_pl.find(u => u.id === id);
 
+    if (!update) return
     updatName.value = update.name;
-    updatePosition.value = update.position;
     updateNumber.value = update.number;
+
+    updateNameValue = update.name;
+    updatePositionValue = update.position;
+    updateNumberValue = String(update.number);
 
     updatePosition.forEach(position => {
         position.classList.remove("background-active");
@@ -177,15 +206,11 @@ function getPlayer(id) {
         }
     });
 
-    update = {
-        name: updateNameValue,
-        position: updatePositionValue,
-        number: updateNumberValue
-    }
+
     return update;
 }
 
-updatName.addEventListener("change", (e) => {
+updatName.addEventListener("input", (e) => {
     updateNameValue = e.target.value;
     checkedName.textContent = "";
 
@@ -212,32 +237,39 @@ updateNumber.addEventListener("input", (e) => {
 
 modifier.addEventListener("click", () => {
     let validation = true;
-    if (!namePlayer.trim()) {
-        checkedName.textContent = "veuillez saisir votre nom";
-        validation = false;
-    }
-
-    if (!positionValue) {
+   
+    if (!updatePositionValue) {
         checkedPosition.textContent = "Définir le poste du joueur";
         validation = false;
     }
 
     if (
-    numberPlayer.trim() === "" ||
-    Number(numberPlayer) < 1 ||
-    Number(numberPlayer) > 99 ||
-    !Number.isInteger(Number(numberPlayer))
+    updateNumberValue.trim() === "" ||
+    Number(updateNumberValue) < 1 ||
+    Number(updateNumberValue) > 99 ||
+    !Number.isInteger(Number(updateNumberValue))
 ) {
     checkedNumber.textContent = "Entrez un numéro entre 1 et 99";
     validation = false;
 }
 
-    if (!validation) {
+   if (!validation) {
         return;
     }
+    
+   const player = players_pl.find(u => u.id === playerId);
 
-    const players_pl = JSON.parse(localStorage.getItem("players"));
-    console.log("aymane")
+   if (!player) return;
+
+   player.name = updateNameValue.trim();
+   player.position = updatePositionValue;
+   player.number = Number(updateNumberValue);
+
+   localStorage.setItem("players", JSON.stringify(players_pl));
+
+   renderPlayers()
+    setNumber()
+    popapUpdate.hidden = true;
     
 })
 
@@ -251,7 +283,7 @@ function renderPlayers() {
         const color = getColor(player);
 
         const html = `
-            <article value=${player.id} class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color} article">
+            <article class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color} article">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <p class="border-1 ${color} px-4 py-2 rounded-full">
@@ -281,6 +313,13 @@ function renderPlayers() {
                         ></i>
                     </div>
                 </div>
+
+                <select name="position" id="position" class="w-full h-[6vh] border border-slate-700 outline-none text-lg text-gray-300 bg-slate-800 font-bold px-4 rounded-lg cursor-pointer transition-all duration-300 focus:${color} hover:${color}" >
+                    <option value="" disabled selected>Choisir un poste</option>
+                    ${player.selection.map(u => `
+                            <option value=${u.value}>${u.label}</option>
+                        `).join("")}
+                </select>
             </article>
         `;
 
