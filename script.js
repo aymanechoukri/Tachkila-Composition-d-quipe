@@ -103,9 +103,9 @@ number.addEventListener("input", (e) => {
 })
 ajouter.addEventListener("click", () => {
 
-    
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
     let validation = true;
-    if (!namePlayer.trim()) {
+    if (!nameRegex.test(namePlayer.trim())) {
         checkedName.textContent = "veuillez saisir votre nom";
         validation = false;
     }
