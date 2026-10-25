@@ -34,14 +34,8 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    gap: 20px;
 }
 
-.boxs div {
-    border-radius: 20px;
-    padding: 0 ;
-    border-radius: 50%;
-}
 
 .box1 {
     grid-column: 4/6;
@@ -99,11 +93,10 @@
 }
 
 .bg {
-    background: url("/Image/background.png.png");
+    background: url("/Image/background2.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    border-radius: 30px;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.505);
 }
 

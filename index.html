@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Tachkila-Composition-d-quipe</title>
 </head>
-<body class="grid grid-cols-3 bg-[#071319] text-white">
+<body class="grid grid-cols-3 text-white overflow-y-hidden bg-gradient-to-br from-[#020604] via-[#071A10] to-[#064E2B]">
     <header class="col-span-full  border-[#6e879a] border-b-2 p-3 flex items-center gap-10">
         <div class="flex flex-1 items-center gap-5 border-green-200 border-r-3 rounded-lg ">
             <img src="/Image/logo.png.png" alt="logo" loading="lazy" class="w-20">
@@ -54,7 +54,7 @@
 
     <!--Ajouter joueur-->
     <div id="popap" class="absolute w-full h-screen  backdrop-blur-sm grid justify-items-center content-center" hidden>
-        <div class="w-[40%] bg-slate-800 h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
+        <div class="w-[40%] bg-gradient-to-br from-[#020604] via-[#071A10] to-[#064E2B] h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
             <div class="flex justify-between items-center">
                 <h2 class="font-bold text-2xl">Ajouter un joueur</h2>
                 <button class="open-or-popap"><i class="fa-solid fa-xmark px-3 py-2 bg-red-600 hover:scale-105 shadow-lg shadow-red-600 cursor-pointer rounded-full"></i></button>
@@ -91,7 +91,7 @@
 
     <!--updated joueur-->
     <div id="popap-update" class="absolute w-full h-screen  backdrop-blur-sm grid justify-items-center content-center" hidden>
-        <div class="w-[40%] bg-slate-800 h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
+        <div class="w-[40%] bg-gradient-to-br from-[#020604] via-[#071A10] to-[#064E2B] h-auto rounded-3xl p-20 flex flex-col gap-10 animation-scal">
             <div class="flex justify-between items-center">
                 <h2 class="font-bold text-2xl">Modifier un joueur</h2>
                 <button class="open-or-clos"><i class="fa-solid fa-xmark px-3 py-2 bg-red-600 hover:scale-105 shadow-lg shadow-red-600 cursor-pointer rounded-full"></i></button>
@@ -126,8 +126,8 @@
         </div>
     </div>
 
-    <aside class="h-[88vh] w-5/6 border-[#6e879a] border-r-2 p-8 flex flex-col gap-10 overflow-y-auto">
-        <button class="bg-green-500 py-5 rounded-xl font-bold text-xl cursor-pointer hover:bg-green-700 hover:scale-102 duration-700 active:scale-90 open-or-popap">+ Ajouter un joueur</button>
+    <aside class="h-[88vh] w-full border-[#6e879a] border-r-2 p-8 flex flex-col gap-10 overflow-y-auto">
+        <button class="bg-gradient-to-br from-[#020604] via-[#071A10] to-[#064E2B] py-5 rounded-xl font-bold text-xl cursor-pointer hover:bg-green-700 hover:scale-102 duration-200 active:scale-90 open-or-popap">+ Ajouter un joueur</button>
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-xl">Effectif</h2>
             <p class="py-2 px-5 bg-slate-950 rounded-lg font-bold "><span class="count-joueur">0</span> joueur(s)</p>
@@ -139,66 +139,85 @@
 
     </aside>
 
-    <main class="col-span-2 grid content-center">
-        <section class=" w-5/6 h-[77vh] boxs bg p-10">
-           <div class="box1 bg-slate-800 flex justify-center items-center flex-col border-2 border-blue-600">
-                <h3 class="font-bold text-2xl text-blue-400">DG</h3>
-                <p class="text-blue-400">Liber</p>
-           </div>
-
-           <div class="box2  bg-slate-800 flex justify-center items-center flex-col border-2 border-green-600">
-                <h3 class="font-bold text-2xl text-green-400">MG</h3>
-                <p class="text-green-400">Liber</p>
-           </div>
-
-           <div class="box3 bg-slate-800 flex justify-center items-center  flex-col border-2 border-red-600">
-                <h3 class="font-bold text-2xl text-red-400">BU</h3>
-                <p class="text-red-400">Liber</p>
-           </div>
-
-           <div class="box4 flex justify-center items-center bg-slate-800 border-2 border-orange-600 shadow-[0px_0px_10px_#ff8904]">
-            <div class="flex items-center gap-3">
-                    <p class="border-1 border-orange-500 px-4 py-2 rounded-[50%] text-orange-500">1</p>
-                    <div>
-                        <h3 class="text-2xl font-bold ">Bono</h3>
-                        <p class="text-orange-500 font-bold">Gardien</p>
-                    </div>
+    <main class="col-span-2 w-full grid ">
+        <section class=" w-full h-[89vh] boxs bg px-32 py-35 ">
+           <div class="box1 bg-[url(/Image/isage.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#6097e5]">
+                <div class="relative">
+                    <h3 class="font-bold text-xl text-blue-300 absolute top-12 left-7 bg-blue-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                    <p class="font-bold text-xl text-blue-300 absolute top-[-10px] left-35 bg-blue-500/50 px-2 rounded-full ">2</p>
                 </div>
            </div>
 
-           <div class="box5 bg-slate-800 flex justify-center items-center flex-col border-2 border-blue-600">
-                <h3 class="font-bold text-2xl text-blue-400">DG</h3>
-                <p class="text-blue-400">Liber</p>
+           <div class="box2  bg-[url(/Image/Nagi.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#27db1a]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-green-300 absolute top-12 left-7 bg-green-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-green-300 absolute top-[-10px] left-35 bg-green-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
 
-           <div class="box6 bg-slate-800 flex justify-center items-center flex-col border-2 border-blue-600">
-                <h3 class="font-bold text-2xl text-blue-400">DG</h3>
-                <p class="text-blue-400">Liber</p>
+           <div class="box3  bg-[url(/Image/Itoshi.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#f70c0c]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-red-300 absolute top-12 left-7 bg-red-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-red-300 absolute top-[-10px] left-35 bg-red-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
 
-           <div class="box7  bg-slate-800 flex justify-center items-center flex-col border-2 border-green-600">
-                <h3 class="font-bold text-2xl text-green-400">MG</h3>
-                <p class="text-green-400">Liber</p>
+           <div class="box4  bg-[url(/Image/Isagi.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#f70c0c]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-orange-300 absolute top-40 left-7 bg-orange-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-orange-300 absolute top-[-8x] left-30 bg-orange-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
 
-           <div class="box8  bg-slate-800 flex justify-center items-center flex-col border-2 border-green-600">
-                <h3 class="font-bold text-2xl text-green-400">MG</h3>
-                <p class="text-green-400">Liber</p>
+           <div class="box5  bg-[url(/Image/Shidou.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#6097e5]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-blue-300 absolute top-12 left-7 bg-blue-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-blue-300 absolute top-[-10px] left-35 bg-blue-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
 
-           <div class="box9 bg-slate-800 flex justify-center items-center flex-col border-2 border-blue-600">
-                <h3 class="font-bold text-2xl text-blue-400">DG</h3>
-                <p class="text-blue-400">Liber</p>
+           <div class="box6  bg-[url(/Image/téléchargement.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#6097e5]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-blue-300 absolute top-12 left-7 bg-blue-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-blue-300 absolute top-[-10px] left-35 bg-blue-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
 
-          <div class="box10  bg-slate-800 flex justify-center items-center flex-col border-2 border-green-600">
-                <h3 class="font-bold text-2xl text-green-400">MG</h3>
-                <p class="text-green-400">Liber</p>
+           <div class="box7  bg-[url(/Image/𝙍𝙞𝙣.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#27db1a]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-green-300 absolute top-12 left-7 bg-green-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-green-300 absolute top-[-10px] left-35 bg-green-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
-           <div class="box11 bg-slate-800 flex justify-center items-center  flex-col border-2 border-red-600">
-                <h3 class="font-bold text-2xl text-red-400">BU</h3>
-                <p class="text-red-400">Liber</p>
+
+           <div class="box8  bg-[url(/Image/Itoshi-Rin.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#27db1a]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-green-300 absolute top-12 left-7 bg-green-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-green-300 absolute top-[-10px] left-35 bg-green-500/50 px-2 rounded-full">5</p>
+            </div>
            </div>
+
+           <div class="box9  bg-[url(/Image/𝐵𝑙𝑢𝑒.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#6097e5]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-blue-300 absolute top-12 left-7 bg-blue-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-blue-300 absolute top-[-10px] left-35 bg-blue-500/50 px-2 rounded-full">5</p>
+            </div>
+           </div>
+
+          <div class="box10  bg-[url(/Image/Rin.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#27db1a]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-green-300 absolute top-12 left-7 bg-green-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-green-300 absolute top-[-10px] left-35 bg-green-500/50 px-2 rounded-full">5</p>
+            </div>
+           </div>
+
+           <div class="box11  bg-[url(/Image/sssss.jpg)] bg-cover bg-no-repeat bg-center rounded-full shadow-[0px_0px_10px_#f70c0c]">
+            <div class="relative ">
+                <h3 class="font-bold text-xl text-red-300 absolute top-12 left-7 bg-red-500/50 px-4 rounded-full overflow-x-auto scrollbar-none w-30 text-center">aymane</h3>
+                <p class="font-bold text-xl text-red-300 absolute top-[-10px] left-35 bg-red-500/50 px-2 rounded-full">5</p>
+            </div>
+           </div>
+
         </section>
     </main>
 </body>

@@ -21,6 +21,7 @@ const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
 const modifier = document.querySelector("#modifier");
 
+
 let namePlayer = "";
 let numberPlayer = "";
 let positionValue = "";
@@ -169,17 +170,17 @@ function deletedPlayer(id) {
 });
 
  tickts.addEventListener("click", (e) => {
-    const btn2 = e.target.closest('[data-edit]');
+   const btn2 = e.target.closest('[data-edit]');
 
     if (!btn2) return;
 
     const id2 = Number(btn2.dataset.edit);
 
     playerId = id2;
-
-   getPlayer(id2);
-   popapUpdate.hidden = !popapUpdate.hidden;
+    getPlayer(playerId)
+    popapUpdate.hidden = !popapUpdate.hidden;
 });
+
 
 
 
@@ -237,6 +238,8 @@ updateNumber.addEventListener("input", (e) => {
 
 modifier.addEventListener("click", () => {
     let validation = true;
+    console.log(playerId)
+    
    
     if (!updatePositionValue) {
         checkedPosition.textContent = "Définir le poste du joueur";
@@ -258,6 +261,7 @@ modifier.addEventListener("click", () => {
     }
     
    const player = players_pl.find(u => u.id === playerId);
+   console.log(playerId)
 
    if (!player) return;
 
@@ -271,7 +275,8 @@ modifier.addEventListener("click", () => {
     setNumber()
     popapUpdate.hidden = true;
     
-})
+});
+
 
 let html = "";
 
@@ -283,7 +288,7 @@ function renderPlayers() {
         const color = getColor(player);
 
         const html = `
-            <article class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color} article">
+            <article value=${player.id} class="flex flex-col gap-6 p-2 border-l-5 rounded-xl ${color} article">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <p class="border-1 ${color} px-4 py-2 rounded-full">
@@ -304,7 +309,7 @@ function renderPlayers() {
                     <div class="flex gap-4">
                         <i
                             data-edit="${player.id}"
-                            class="fa-solid fa-pen-to-square text-slate-400 text-2xl cursor-pointer hover:text-slate-500"
+                            class="btn-edit fa-solid fa-pen-to-square text-slate-400 text-2xl cursor-pointer hover:text-slate-500"
                         ></i>
 
                         <i
@@ -314,10 +319,10 @@ function renderPlayers() {
                     </div>
                 </div>
 
-                <select name="position" id="position" class="w-full h-[6vh] border border-slate-700 outline-none text-lg text-gray-300 bg-slate-800 font-bold px-4 rounded-lg cursor-pointer transition-all duration-300 focus:${color} hover:${color}" >
+                <select  data-player=${player.id} name="position"  class="w-full h-[6vh] border border-slate-700 outline-none text-lg text-gray-300 bg-slate-800 font-bold px-4 rounded-lg cursor-pointer transition-all duration-300 focus:${color} hover:${color}" >
                     <option value="" disabled selected>Choisir un poste</option>
                     ${player.selection.map(u => `
-                            <option value=${u.value}>${u.label}</option>
+                            <option class="choise" value=${u.value}>${u.label}</option>
                         `).join("")}
                 </select>
             </article>
@@ -326,7 +331,6 @@ function renderPlayers() {
         tickts.insertAdjacentHTML("beforeend", html);
     });
 }
-
 
 renderPlayers();
 setNumber();
@@ -341,4 +345,22 @@ openOrClose.forEach(btn => {
     btn.addEventListener("click", () => {
         popapUpdate.hidden = !popapUpdate.hidden;
     })
+});
+
+let nameJoueur = "";
+let numberJoueur = "";
+
+
+tickts.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-player]");
+
+    if (!btn) return;
+
+    const id = Number(btn.dataset.player);
+
+    const player = players_pl.find(u => u.id === id);
+    console.log(player);
+    
+    nameJoueur = player.name;
+    numberJoueur = player.number;
 })
