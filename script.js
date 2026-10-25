@@ -1,5 +1,30 @@
 import { COLOR_MAP } from "./data.js";
 
+const POSITIONS_AUTORISEES = {
+    Gardien: [
+        { value: "GB", label: "GB - Gardien" }
+    ],
+
+    Defenseur: [
+        { value: "DG", label: "DG - Défenseur gauche" },
+        { value: "DC1", label: "DC1 - Défenseur central 1" },
+        { value: "DC2", label: "DC2 - Défenseur central 2" },
+        { value: "DD", label: "DD - Défenseur droit" }
+    ],
+
+    Milieu: [
+        { value: "MG", label: "MG - Milieu gauche" },
+        { value: "MC1", label: "MC1 - Milieu central 1" },
+        { value: "MC2", label: "MC2 - Milieu central 2" },
+        { value: "MD", label: "MD - Milieu droit" }
+    ],
+
+    Buteur: [
+        { value: "BU1", label: "BU1 - Buteur 1" },
+        { value: "BU2", label: "BU2 - Buteur 2" }
+    ]
+};
+
 const tickts = document.querySelector("#tickts");
 const popap = document.getElementById("popap");
 const popapUpdate = document.getElementById("popap-update");
@@ -20,6 +45,7 @@ const updatName = document.querySelector("#updateName");
 const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
 const modifier = document.querySelector("#modifier");
+const error = document.querySelector(".error");
 
 
 let namePlayer = "";
@@ -33,8 +59,10 @@ let updatePositionValue = "";
 let playerId = null;
 
 
+
 const players_pl = JSON.parse(localStorage.getItem("players")) || [];
 let cou = JSON.parse(localStorage.getItem("numberPlayer")) || 0;
+
 
 function setNumber() {
     cou = players_pl.length;
@@ -52,6 +80,7 @@ function addPlayer(player) {
 positions.forEach(position => {
     position.addEventListener("click", () => {
         positionValue = position.dataset.position;
+        console.log(positionValue)
         positions.forEach(btn => {
             btn.classList.remove("background-active");
         });
@@ -73,6 +102,7 @@ number.addEventListener("input", (e) => {
     checkedName.textContent = "";
 })
 ajouter.addEventListener("click", () => {
+
     
     let validation = true;
     if (!namePlayer.trim()) {
@@ -94,6 +124,14 @@ ajouter.addEventListener("click", () => {
     checkedNumber.textContent = "Entrez un numéro entre 1 et 99";
     validation = false;
 }
+    for (let i = 0; i < players_pl.length; i++) {
+        if (Number(numberPlayer) === Number(players_pl[i].number)) {
+            error.textContent = "Ce numéro est déjà accepté.";
+            validation = false;
+            break;
+        }
+    }
+
 
     if (!validation) {
         return;
@@ -105,20 +143,8 @@ ajouter.addEventListener("click", () => {
         name: namePlayer,
         position: positionValue,
         number: numberPlayer,
-        selection: [
-    { value: "GB", label: "GB - Gardien" },
-    { value: "DG", label: "DG - Défenseur gauche" },
-    { value: "DC1", label: "DC - Défenseur central 1" },
-    { value: "DC2", label: "DC - Défenseur central 2" },
-    { value: "DD", label: "DD - Défenseur droit" },
-    { value: "MG", label: "MG - Milieu gauche" },
-    { value: "MC1", label: "MC - Milieu central 1" },
-    { value: "MC2", label: "MC - Milieu central 2" },
-    { value: "MD", label: "MD - Milieu droit" },
-    { value: "BU1", label: "BU - Buteur 1" },
-    { value: "BU2", label: "BU - Buteur 2" },
-    { value: "BENCH", label: "Sur le banc" }
-    ]
+        selection: POSITIONS_AUTORISEES[positionValue],
+        assignedPosition: ""
     }
     
     addPlayer(player)
@@ -320,9 +346,16 @@ function renderPlayers() {
                 </div>
 
                 <select  data-player=${player.id} name="position"  class="w-full h-[6vh] border border-slate-700 outline-none text-lg text-gray-300 bg-slate-800 font-bold px-4 rounded-lg cursor-pointer transition-all duration-300 focus:${color} hover:${color}" >
-                    <option value="" disabled selected>Choisir un poste</option>
-                    ${player.selection.map(u => `
-                            <option class="choise" value=${u.value}>${u.label}</option>
+                    <option value="" disabled ${player.assignedPosition ? "" : "selected"}>
+                        Choisir un poste
+                    </option>
+                    ${(POSITIONS_AUTORISEES[player.position] || []).map(u => `
+                    <option
+                            value="${u.value}"
+                            ${player.assignedPosition === u.value ? "selected" : ""}
+                        >
+                            ${u.label}
+                        </option>
                         `).join("")}
                 </select>
             </article>
@@ -332,7 +365,27 @@ function renderPlayers() {
     });
 }
 
+function renderPitch() {
+  players_pl.forEach(player => {
+    if (!player.assignedPosition) return;
+
+    const namePl = document.querySelector(
+      `.name-pl[value="${player.assignedPosition}"]`
+    );
+
+    const numPl = document.querySelector(
+      `.num-pl[value="${player.assignedPosition}"]`
+    );
+
+    if (namePl && numPl) {
+      namePl.textContent = player.name;
+      numPl.textContent = player.number;
+    }
+  });
+}
+
 renderPlayers();
+renderPitch()
 setNumber();
 
 openOrClosePopap.forEach(btn => {
@@ -347,6 +400,8 @@ openOrClose.forEach(btn => {
     })
 });
 
+
+
 let nameJoueur = "";
 let numberJoueur = "";
 
@@ -357,6 +412,7 @@ tickts.addEventListener("click", (e) => {
     if (!btn) return;
 
     const id = Number(btn.dataset.player);
+    playerId =id;
 
     const player = players_pl.find(u => u.id === id);
     console.log(player);
@@ -364,3 +420,65 @@ tickts.addEventListener("click", (e) => {
     nameJoueur = player.name;
     numberJoueur = player.number;
 })
+
+
+tickts.addEventListener("change", (e) => {
+    if (!e.target.matches("select[data-player]")) return;
+
+    const select = e.target;
+    const id = Number(select.dataset.player);
+    const valueSelect = select.value;
+
+    const player = players_pl.find(u => u.id === id);
+    if (!player) return;
+
+    const postesAutorises =
+        POSITIONS_AUTORISEES[player.position] || [];
+
+    if (!postesAutorises.some(p => p.value === valueSelect)) {
+        alert("Ce joueur ne peut pas jouer à ce poste !");
+        select.value = "";
+        return;
+    }
+
+    const namePl = document.querySelector(
+        `.name-pl[value="${valueSelect}"]`
+    );
+
+    const numPl = document.querySelector(
+        `.num-pl[value="${valueSelect}"]`
+    );
+
+    if (!namePl || !numPl) return;
+
+    if (
+        namePl.textContent !== "?" &&
+        namePl.textContent !== player.name
+    ) {
+        alert("Cette position est déjà occupée !");
+        select.value = "";
+        return;
+    }
+
+    if (player.assignedPosition) {
+        const oldName = document.querySelector(
+            `.name-pl[value="${player.assignedPosition}"]`
+        );
+
+        const oldNum = document.querySelector(
+            `.num-pl[value="${player.assignedPosition}"]`
+        );
+
+        if (oldName && oldName.textContent === player.name) {
+            oldName.textContent = "?";
+            oldNum.textContent = "?";
+        }
+    }
+
+    namePl.textContent = player.name;
+    numPl.textContent = player.number;
+
+    player.assignedPosition = valueSelect;
+
+    localStorage.setItem("players", JSON.stringify(players_pl));
+});
