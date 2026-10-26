@@ -45,7 +45,41 @@ const updatName = document.querySelector("#updateName");
 const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
 const modifier = document.querySelector("#modifier");
-const error = document.querySelector(".error");
+const error = document.querySelectorAll(".error");
+
+
+const toast = document.querySelector("#toast");
+const toastMessage = document.querySelector("#toast-message");
+
+let toastTimer;
+
+function showToast(message, type = "success") {
+    clearTimeout(toastTimer);
+
+    toastMessage.textContent = message;
+
+    toast.classList.remove(
+        "hidden",
+        "bg-green-600",
+        "bg-red-600",
+        "bg-blue-600"
+    );
+
+    if (type === "success") {
+        toast.classList.add("bg-green-600");
+    } else if (type === "error") {
+        toast.classList.add("bg-red-600");
+    } else {
+        toast.classList.add("bg-blue-600");
+    }
+
+    toast.classList.remove("hidden");
+
+    toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 3000);
+}
+
 
 
 let namePlayer = "";
@@ -105,8 +139,8 @@ ajouter.addEventListener("click", () => {
 
     const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
     let validation = true;
-    if (!nameRegex.test(namePlayer.trim())) {
-        checkedName.textContent = "veuillez saisir votre nom";
+    if (!nameRegex.test(namePlayer.trim()) || namePlayer.length < 3 || namePlayer.length > 99) {
+        checkedName.textContent = "Le nom doit contenir entre 3 et 30 caractères.";
         validation = false;
     }
 
@@ -127,6 +161,9 @@ ajouter.addEventListener("click", () => {
     for (let i = 0; i < players_pl.length; i++) {
         if (Number(numberPlayer) === Number(players_pl[i].number)) {
             error.textContent = "Ce numéro est déjà accepté.";
+            error.forEach(e => {
+                e.textContent = "Ce numéro est déjà accepté.";
+            })
             validation = false;
             break;
         }
@@ -162,13 +199,13 @@ ajouter.addEventListener("click", () => {
     renderPlayers();
     setNumber()
     popap.hidden = true;
+    showToast("Joueur ajouté avec succès !");
 })
 
 updatName.addEventListener("input", (e) => {
     namePlayer = e.target.value;
     checkedName.textContent = "";
 
-    console.log(namePlayer)
 });
 
 
@@ -182,10 +219,11 @@ function deletedPlayer(id) {
     const filterPlayer = players_pl.filter(u => u.id !== id);
     localStorage.setItem("players", JSON.stringify(filterPlayer));
 
-    renderPlayers()
+    
     setNumber()
-    location.reload();
+    location.reload()
 }
+
 
     tickts.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-delete]");
@@ -193,6 +231,8 @@ function deletedPlayer(id) {
 
     const id = Number(btn.dataset.delete);
     deletedPlayer(id);
+    showToast("Joueur supprimé avec succès !");
+    renderPlayers()
 });
 
  tickts.addEventListener("click", (e) => {
@@ -274,13 +314,24 @@ modifier.addEventListener("click", () => {
 
     if (
     updateNumberValue.trim() === "" ||
-    Number(updateNumberValue) < 1 ||
+    Number(updateNumberValue) < 3 ||
     Number(updateNumberValue) > 99 ||
     !Number.isInteger(Number(updateNumberValue))
 ) {
     checkedNumber.textContent = "Entrez un numéro entre 1 et 99";
     validation = false;
 }
+
+for (let i = 0; i < players_pl.length; i++) {
+        if (Number(updateNumberValue) === Number(players_pl[i].number)) {
+            error.textContent = "Ce numéro est déjà accepté.";
+            error.forEach(e => {
+                e.textContent = "Ce numéro est déjà accepté.";
+            })
+            validation = false;
+            break;
+        }
+    }
 
    if (!validation) {
         return;
@@ -299,7 +350,9 @@ modifier.addEventListener("click", () => {
 
    renderPlayers()
     setNumber()
+    showToast("Modification enregistrée.", "success")
     popapUpdate.hidden = true;
+    
     
 });
 
