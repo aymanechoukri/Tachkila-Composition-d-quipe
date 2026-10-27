@@ -489,7 +489,7 @@ tickts.addEventListener("change", (e) => {
         POSITIONS_AUTORISEES[player.position] || [];
 
     if (!postesAutorises.some(p => p.value === valueSelect)) {
-        alert("Ce joueur ne peut pas jouer à ce poste !");
+        showToast("Ce joueur ne peut pas jouer à ce poste !");
         select.value = "";
         return;
     }
@@ -508,7 +508,7 @@ tickts.addEventListener("change", (e) => {
         namePl.textContent !== "?" &&
         namePl.textContent !== player.name
     ) {
-        alert("Cette position est déjà occupée !");
+        showToast("Cette position est déjà occupée !");
         select.value = "";
         return;
     }
