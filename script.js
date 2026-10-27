@@ -2,26 +2,26 @@ import { COLOR_MAP } from "./data.js";
 
 const POSITIONS_AUTORISEES = {
     Gardien: [
-        { value: "GB", label: "GB - Gardien" }
+        { value: "GB", label: "GB - Gardien" },
     ],
 
     Defenseur: [
         { value: "DG", label: "DG - Défenseur gauche" },
         { value: "DC1", label: "DC1 - Défenseur central 1" },
         { value: "DC2", label: "DC2 - Défenseur central 2" },
-        { value: "DD", label: "DD - Défenseur droit" }
+        { value: "DD", label: "DD - Défenseur droit" },
     ],
 
     Milieu: [
         { value: "MG", label: "MG - Milieu gauche" },
         { value: "MC1", label: "MC1 - Milieu central 1" },
         { value: "MC2", label: "MC2 - Milieu central 2" },
-        { value: "MD", label: "MD - Milieu droit" }
+        { value: "MD", label: "MD - Milieu droit" },
     ],
 
     Buteur: [
         { value: "BU1", label: "BU1 - Buteur 1" },
-        { value: "BU2", label: "BU2 - Buteur 2" }
+        { value: "BU2", label: "BU2 - Buteur 2" },
     ]
 };
 
@@ -46,6 +46,7 @@ const updatePosition = document.querySelectorAll(".updatePosition");
 const updateNumber = document.querySelector("#updateNumber");
 const modifier = document.querySelector("#modifier");
 const error = document.querySelectorAll(".error");
+const touch = document.querySelectorAll(".touch");
 
 
 const toast = document.querySelector("#toast");
@@ -411,6 +412,7 @@ function renderPlayers() {
                         </option>
                         `).join("")}
                 </select>
+                    <button data-toch=${player.id} class="cursor-pointer touch bg-red-300 rounded-md py-2 font-bold hover:scale-102 duration-100" type="button">Bon toch</button>
             </article>
         `;
 
@@ -475,7 +477,7 @@ tickts.addEventListener("click", (e) => {
 })
 
 
-tickts.addEventListener("change", (e) => {
+tickts.addEventListener("click", (e) => {
     if (!e.target.matches("select[data-player]")) return;
 
     const select = e.target;
@@ -533,5 +535,47 @@ tickts.addEventListener("change", (e) => {
 
     player.assignedPosition = valueSelect;
 
+
     localStorage.setItem("players", JSON.stringify(players_pl));
+});
+
+
+tickts.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-toch]");
+    if (!btn) return;
+
+    const id = Number(btn.dataset.toch);
+    const player = players_pl.find(p => p.id === id);
+
+    if (!player || !player.assignedPosition) {
+        showToast("Ce joueur n'est pas sur le terrain !", "error");
+        return;
+    }
+
+    const poste = player.assignedPosition;
+
+    const namePl = document.querySelector(
+        `.name-pl[value="${poste}"]`
+    );
+
+    const numPl = document.querySelector(
+        `.num-pl[value="${poste}"]`
+    );
+
+    if (namePl && numPl) {
+        namePl.textContent = "?";
+        numPl.textContent = "?";
+    }
+
+    player.assignedPosition = "";
+
+    localStorage.setItem("players", JSON.stringify(players_pl));
+
+    const select = tickts.querySelector(
+        `select[data-player="${id}"]`
+    );
+
+    if (select) select.value = "";
+
+    showToast("Joueur retiré du terrain !");
 });
