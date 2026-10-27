@@ -34,6 +34,7 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-rows: repeat(9, minmax(0, 1fr));
+    min-width: 700px;
 }
 
 
